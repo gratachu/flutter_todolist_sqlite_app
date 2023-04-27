@@ -14,13 +14,13 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
   _showFormDialog(BuildContext context){
     return showDialog(context: context, barrierDismissible: true, builder: (param){
       return AlertDialog(
-        title: Text("Category Form"),
+        title: const Text("Category Form"),
         content: SingleChildScrollView(
           child: Column(
-            children: <Widget>[
+            children: const <Widget>[
                 TextField(
                 decoration: InputDecoration(
-                  labelText: "Category Name",
+                  labelText: "Category",
                   hintText: "Write category name"
                 ),
               ),
@@ -44,7 +44,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
         title: const Text("Categories"),
       ),
       drawer: DrawerNavigation(),
-      body: Center(
+      body: const Center(
         child: Text("Wlecome to Categories Screen"),
       ),
       floatingActionButton: FloatingActionButton(
