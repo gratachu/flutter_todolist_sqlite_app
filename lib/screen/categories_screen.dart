@@ -14,6 +14,22 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
   _showFormDialog(BuildContext context){
     return showDialog(context: context, barrierDismissible: true, builder: (param){
       return AlertDialog(
+        actions: <Widget>[
+          ElevatedButton(
+            onPressed: () => Navigator.pop(context),
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.grey,
+            ),
+            child: const Text("Cancel"),
+          ),
+          ElevatedButton(
+            onPressed: () {},
+            style: ElevatedButton.styleFrom(
+            backgroundColor: Colors.blue,
+            ),
+            child: const Text("Save"),
+          )
+        ],
         title: const Text("Category Form"),
         content: SingleChildScrollView(
           child: Column(
@@ -24,6 +40,12 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                   hintText: "Write category name"
                 ),
               ),
+              TextField(
+                decoration: InputDecoration(
+                  labelText: "Description",
+                  hintText: "Write category description"
+                ),
+              )
             ]
           )
         )
