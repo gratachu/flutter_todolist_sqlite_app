@@ -16,8 +16,30 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
   final _categoryNameController = TextEditingController();
   final _categoryDescriptionController = TextEditingController();
 
-  final _category = Category(name: '', description: '');
+  final _category = Category();
   final _categoryService = CategoryService();
+
+  List<Category> _categoryList = <Category>[];
+
+  @override
+  void initState() {
+    super.initState();
+    getAllCategories();
+  }
+
+  getAllCategories() async {
+    _categoryList = <Category>[];
+    var categories = await _categoryService.readCategories();
+    categories.forEach((category) {
+      setState(() {
+        var categoryModel = Category();
+        categoryModel.name = category['name'];
+        categoryModel.description = category['description'];
+        categoryModel.id = category['id'];
+        _categoryList.add(categoryModel);
+      });
+    });
+  }
 
   _showFormDialog(BuildContext context){
     return showDialog(context: context, barrierDismissible: true, builder: (param){
@@ -80,9 +102,23 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
         title: const Text("Categories"),
       ),
       drawer: DrawerNavigation(),
-      body: const Center(
-        child: Text("Wlecome to Categories Screen"),
-      ),
+      body: ListView.builder(
+        itemCount: _categoryList.length,
+        itemBuilder: (context, index){
+          return Card(
+            child: ListTile(
+              leading: IconButton(icon: Icon(Icons.edit), onPressed: () {}),
+              title: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  Text(_categoryList[index].name.toString()),
+                  IconButton(onPressed: (){}, icon: Icon(Icons.delete), color: Colors.red,)
+                ],
+              ),
+              subtitle: Text(_categoryList[index].description.toString()),
+            ),
+          );
+        }),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           _showFormDialog(context);
